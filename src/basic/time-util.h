@@ -17,6 +17,7 @@ typedef uint64_t nsec_t;
 #define USEC_FMT "%" PRI_USEC
 
 #include "macro.h"
+#include "time-now.h"
 
 typedef struct dual_timestamp {
         usec_t realtime;
@@ -77,8 +78,7 @@ typedef enum TimestampStyle {
 
 #define TIMESPEC_OMIT ((const struct timespec) { .tv_nsec = UTIME_OMIT })
 
-usec_t now(clockid_t clock);
-nsec_t now_nsec(clockid_t clock);
+clockid_t map_clock_id(clockid_t c);
 
 usec_t map_clock_usec_raw(usec_t from, usec_t from_base, usec_t to_base);
 usec_t map_clock_usec(usec_t from, clockid_t from_clock, clockid_t to_clock);

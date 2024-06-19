@@ -28,7 +28,7 @@
 #include "strv.h"
 #include "time-util.h"
 
-static clockid_t map_clock_id(clockid_t c) {
+clockid_t map_clock_id(clockid_t c) {
 
         /* Some more exotic archs (s390, ppc, …) lack the "ALARM" flavour of the clocks. Thus,
          * clock_gettime() will fail for them. Since they are essentially the same as their non-ALARM
@@ -46,22 +46,6 @@ static clockid_t map_clock_id(clockid_t c) {
         default:
                 return c;
         }
-}
-
-usec_t now(clockid_t clock_id) {
-        struct timespec ts;
-
-        assert_se(clock_gettime(map_clock_id(clock_id), &ts) == 0);
-
-        return timespec_load(&ts);
-}
-
-nsec_t now_nsec(clockid_t clock_id) {
-        struct timespec ts;
-
-        assert_se(clock_gettime(map_clock_id(clock_id), &ts) == 0);
-
-        return timespec_load_nsec(&ts);
 }
 
 dual_timestamp* dual_timestamp_now(dual_timestamp *ts) {

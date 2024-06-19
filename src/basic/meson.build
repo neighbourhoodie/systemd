@@ -113,6 +113,12 @@ basic_sources = files(
         'xattr-util.c',
 )
 
+if get_option('fake-clock')
+        basic_sources += files('time-now-fake.c')
+else
+        basic_sources += files('time-now.c')
+endif
+
 missing_audit_h = files('missing_audit.h')
 missing_capability_h = files('missing_capability.h')
 missing_socket_h = files('missing_socket.h')
